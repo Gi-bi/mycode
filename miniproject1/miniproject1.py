@@ -15,7 +15,7 @@ while True:
         secret = '' #an empty string that holds the encrypted message
         for char in user_input:
             if(char.isalpha()): #is the user input in the alphabet
-                other = (dict1[char] + shift ) % 26 #keeps "other" in dict2 to key 0-25 by wrapping back to 0
+                other = (dict1[char] + shift ) % 26 #a variable other in dict2 to key 0-25 by wrapping back to 0
                 secret += dict2[other]
             else:
                 secret += char
