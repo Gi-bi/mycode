@@ -1,50 +1,38 @@
 #!/usr/bin/env python3
 
 import random
+import getpass
 
+dict1 = {'a':1, 'b':2, 'c':3, 'd':4, 'e':5, 'f':6, 'g':7,'h':8, 'i':9, 'j':10, 'k':11, 'l':12, 'm':13, 'n':14, 'o':15, 'p':16, 'q':17, 'r':18, 's':19, 't':20, 'u':21, 'v':22, 'w':23, 'x':24, 'y':25, 'z':26}
 
-print("Welcome to Hangman")
+dict2 = {0:'n', 1:'o', 2:'p', 3:'q', 4:'r', 5:'s', 6:'t', 7:'u', 8:'v', 9:'w', 10:'x', 11:'y', 12:'z', 13:'a', 14:'b', 15:'c', 16:'d', 17:'e', 18:'f', 19:'g', 20:'h', 21:'i', 22:'j', 23:'k', 24:'l', 25:'m'}
 
-with open("english.txt", "r") as file:
-    answer = file.read()
-    words = list(map(str, answer.split()))
+while True:
 
+    user_input = getpass.getpass("Tell me a secret: \n\n").lower()
+
+    def encrypt(user_input, shift):#random shift
+        secret = '' #an empty string that holds the encrypted message
+        for char in user_input:
+            if(char.isalpha()): #is the user input in the alphabet
+                other = (dict1[char] + shift ) % 26 #keeps "other" in dict2 to key 0-25 by wrapping back to 0
+                secret += dict2[other]
+            else:
+                secret += char
     
-secret_word = random.choice(words)
+        return secret
 
-#Checking to see if I pulled a random word
-print(secret_word)
-print()
-#print secret word to console but replace each character with "_ "
+    #rot function to initiate the code
+    def rot(user_input):
+        shift = random.randint(1,14)
+        result = encrypt(user_input, shift)
+        print(result)
+    rot(user_input)
 
-def hidden_word():
-    hidden = ""
-    for i in secret_word:
-        hidden  += "_ "
-    return hidden
+    play_again = input("Any more secrets? [y/n]\n")
 
-hidden = hidden_word()
-
-
-# number of attempts to increment when wrong answer
-attempt = 0
-
-#two conditions
-while x in hidden and attempt <= 10:
-    #Printing directions and asking the user for input 
-    guess = input("You have 10 guesses. Good luck! \n")
-
-    #using keyword "in" to check guess against the secret_word
-   # if guess in secret_word:
-    #    for i in range(len(secret_word)):
-     #       if secret_word[i] == guess:
-                
-
-   # else:
-    #    print(f"INCORRECT: You have made {attempt} guess")
-     #   attempt += 1
-
-
-#bank of letters already guessed
-print(guess)
+    if (play_again == 'n'):
+        print()
+        print("Your secret is safe with me")
+        break
 
